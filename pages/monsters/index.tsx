@@ -1,10 +1,10 @@
 import Head from "next/head";
+import Link from "next/link";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { useFetch } from "../hooks/useFetch";
-import {GrSearchAdvanced} from 'react-icons/gr'
 import styles from './styles.module.scss'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Monster{
     name: string;
@@ -24,11 +24,14 @@ interface Type{
 
 export default function Monsters(){
 
-    const {data, loading} = useFetch<Monster[]>('http://localhost:5000/api/monsters')
-    //--
+
     const [sortCol, setSortCol] = useState<string>('name');
     const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
-  
+    const [search, setSearch] = useState('')
+
+    const {data, loading} = useFetch<Monster[]>('http://localhost:5000/api/monsters/query?nome='+search)
+    //--
+
     function handleSort(colName: string) {
       if (sortCol === colName) {
         // Se a coluna já está selecionada, alterne a direção da ordenação
@@ -65,7 +68,7 @@ export default function Monsters(){
         return (
             <>
                 <Header/>
-                    <h1>Loading...</h1>
+                    <h1 className={styles.loading}>Loading...</h1>
                 <Footer/>
             </>
         )
@@ -74,10 +77,11 @@ export default function Monsters(){
         <>
         <Header/>
         <Head><title>Monsters - Monkeys & Dungeons</title></Head>
+
             <form className={styles.search}>
-                <input type="text" placeholder="Search Monster"/>
-                <button type="submit"><GrSearchAdvanced/></button>
+                <input type="text" placeholder="Search Monster" onChange={(e)=>setSearch(e.target.value)}/>
             </form>
+
             <table className={styles.table}>
                 <thead>
                     <tr>
@@ -90,24 +94,29 @@ export default function Monsters(){
                 <tbody>
             {sortedData?.map(monster => {
                 return (
-                    <tr key={monster.name}>
-                        <td>{monster.name}</td>
-                        <td>{monster.source}</td>
-                        <td>
-                        {monster.type
-                            ? typeof monster.type === 'string'
-                            ? monster.type
-                            : monster.type.type
-                            : ''}
-                        </td>
-                        <td>
-                        {monster.cr
-                            ? typeof monster.cr === 'string'
-                            ? monster.cr
-                            : monster.cr.cr
-                            : ''}
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                            <Link key={monster.name} href={{pathname: '/monster', query: {nome: monster.name, source: monster.source}}}>
+                                {monster.name}
+                            </Link>
+                            </td>
+                            <td>{monster.source}</td>
+                            <td>
+                            {monster.type
+                                ? typeof monster.type === 'string'
+                                ? monster.type
+                                : monster.type.type
+                                : ''}
+                            </td>
+                            <td>
+                            {monster.cr
+                                ? typeof monster.cr === 'string'
+                                ? monster.cr
+                                : monster.cr.cr
+                                : ''}
+                            </td>
+                            
+                        </tr>
                 )
             })}
                 </tbody>

@@ -23,13 +23,21 @@
         }
     }
     tbody{
-        tr{
-            td{
-                padding: 10px;
-                border: 1px solid #fff;
-                background-color: #ffffff69;
-                color: #000000;
+        
+            tr{
+                td{
+                    padding: 10px;
+                    border: 1px solid #fff;
+                    background-color: #ffffff69;
+                    color: #000000;
+                }
             }
-        }
+        
+        
     }
+}
+.loading{
+    text-align: center;
+    margin: 1rem;
+
 }
