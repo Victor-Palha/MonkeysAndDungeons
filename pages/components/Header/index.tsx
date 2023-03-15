@@ -4,10 +4,10 @@ export function Header(){
     return(
         <header className={styles.header}>
             <div className={styles.logo}>
-                <h1>M&D</h1>
+                <Link href="/"><h1>M&D</h1></Link>
             </div>
             <nav className={styles.nav}>
-                <Link href='/'>Home</Link>
+                <Link href='/about'>ABOUT</Link>
             </nav>
         </header>
     )

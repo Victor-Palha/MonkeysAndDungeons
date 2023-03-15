@@ -1,5 +1,6 @@
 import styles from '../styles/Home.module.scss'
 import Head from 'next/head'
+import Link from 'next/link'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 //icons
@@ -14,22 +15,30 @@ export default function Home() {
       <Head><title>Home - Monkeys & Dungeons</title></Head>
       <Header/>
       <main className={styles.container}>
-        <div className={styles.box}>
-          <FaDragon/>
-          <h3>Monsters</h3>
-        </div>
-        <div className={styles.box}>
-          <FaMagic/>
-          <h3>Spells</h3>
-        </div>
-        <div className={styles.box}>
-          <FaGem/>
-          <h3>Items</h3>
-        </div>
-        <div className={styles.box}>
-          <FaDungeon/>
-          <h3>Adventures</h3>
-        </div>
+        <Link href="/monsters">
+          <div className={styles.box}>
+            <FaDragon/>
+            <h3>Monsters</h3>
+          </div>
+        </Link>
+        <Link href="/spells">
+          <div className={styles.box}>
+            <FaMagic/>
+            <h3>Spells</h3>
+          </div>
+        </Link>
+        <Link href="/items">
+          <div className={styles.box}>
+            <FaGem/>
+            <h3>Items</h3>
+          </div>
+        </Link>
+        <Link href="/adventures">
+          <div className={styles.box}>
+            <FaDungeon/>
+            <h3>Adventures</h3>
+          </div>
+        </Link>
       </main>
       <Footer/>
     </>

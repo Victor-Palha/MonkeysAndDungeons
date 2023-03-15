@@ -1,8 +1,8 @@
-
+import styles from './styles.module.scss'
 export function Footer(){
     return(
-        <footer>
-            <p>Footer</p>
+        <footer className={styles.footer}>
+            <p>DEVELOPED BY VICTOR PALHA</p>
         </footer>
     )
 }
