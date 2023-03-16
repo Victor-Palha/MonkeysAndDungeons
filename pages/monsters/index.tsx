@@ -16,6 +16,8 @@ interface Monster{
         coven?: string;
     } | string;
     type: Type | string;
+    image: boolean;
+    ext: string | null;
 }
 interface Type{
     type: string;
@@ -48,27 +50,19 @@ export default function Monsters(){
 
             <div className={styles.container}>
             {data?.map(monster => {
-                  const extensions = [".jpg", ".webp", ".png"];
                   return (
                     <div className={styles.box} key={monster.name}>
-                    {
-                        extensions.map((ext) => {
-                                return (
-                                    <img src={`http://localhost:5000/bestiary/${monster.source}/${monster.name}${ext}`} alt={monster.name}/>
-                                )
-                        })
-                    }
+                        {monster.image && (<img src={`http://localhost:5000/bestiary/${monster.source}/${monster.name}${monster.ext}`} alt={monster.name}/>)}
+                        {!monster.image && (<GiFishMonster size={100}/>)}
                     <p>{monster.name}</p>
-                    <span>{monster.source}</span>
-                    <span>
-                        {monster.type
+                    <span>Source: {monster.source}</span>
+                    <span>Type: {monster.type
                         ? typeof monster.type === 'string'
                             ? monster.type
                             : monster.type.type
                         : ''}
                     </span>
-                    <span>
-                        {monster.cr
+                    <span>CR: {monster.cr
                         ? typeof monster.cr === 'string'
                             ? monster.cr
                             : monster.cr.cr

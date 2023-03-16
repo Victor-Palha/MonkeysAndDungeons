@@ -8,7 +8,7 @@ export function useFetch<T = unknown>(url: string){
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(url);
-            setData(result.data.slice(0, 20));
+            setData(result.data);
             setLoading(false);
         };
         fetchData();
