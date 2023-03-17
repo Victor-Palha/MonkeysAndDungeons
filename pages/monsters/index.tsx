@@ -4,7 +4,7 @@ import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { useFetch } from "../hooks/useFetch";
 import styles from './styles.module.scss'
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {GiFishMonster} from 'react-icons/gi'
 
 interface Monster{
@@ -27,8 +27,19 @@ interface Type{
 
 export default function Monsters(){
 
+    const [slice, setSlice] = useState(20)
     const [search, setSearch] = useState('')
-    const {data, loading} = useFetch<Monster[]>('http://localhost:5000/api/monsters/query?nome='+search)
+    const {data, loading} = useFetch<Monster[]>('http://localhost:5000/api/monsters/query?nome='+search, slice)
+
+    //scroll functions
+    function handleScroll(){
+        if(window.innerHeight + document.documentElement.scrollTop + 1 > document.body.scrollHeight){
+            setSlice(prev => prev + 20)
+        }
+    }
+    useEffect(()=>{
+        window.addEventListener('scroll', handleScroll)    
+    }, [])
 
     if(loading){
         return (
@@ -73,6 +84,7 @@ export default function Monsters(){
                     </Link>
                 );
                 })}
+                
             </div>
         <Footer/>
         </>
