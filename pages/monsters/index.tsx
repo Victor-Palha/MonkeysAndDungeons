@@ -62,7 +62,7 @@ export default function Monsters(){
             <div className={styles.container}>
             {data?.map(monster => {
                   return (
-                    <Link href={{pathname: '/monster', query: { nome: monster.name, source: monster.source }}} key={monster.name} className={styles.a}>
+                    <Link href={{pathname: '/monster', query: { nome: monster.name, source: monster.source, ext:monster.ext, img: monster.image }}} key={monster.name} className={styles.a}>
                         <div className={styles.box} >
                             {monster.image && (<img src={`http://localhost:5000/bestiary/${monster.source}/${monster.name}${monster.ext}`} alt={monster.name}/>)}
                             {!monster.image && (<GiFishMonster size={100}/>)}
@@ -74,7 +74,7 @@ export default function Monsters(){
                                 : monster.type.type
                             : ''}
                         </span>
-                        <span>CR: {monster.cr
+                        <span>Challenge: {monster.cr
                             ? typeof monster.cr === 'string'
                                 ? monster.cr
                                 : monster.cr.cr
