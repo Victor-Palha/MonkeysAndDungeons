@@ -164,6 +164,17 @@ export default function Monster(){
                                                 ))}
                                             </div>
                                         )}
+                                        {info.legendary && (
+                                            <div className={styles.trait}>
+                                                <h2>Legendary Actions</h2>
+                                                {info.legendary.map(legendary=>(
+                                                    <div key={legendary.name}>
+                                                        <h3>{legendary.name}</h3>
+                                                        <p>{legendary.entries[0]}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
                                     <div className={styles.actions}>
                                         {info.action && (
