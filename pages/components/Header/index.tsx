@@ -7,7 +7,8 @@ export function Header(){
                 <Link href="/"><h1>M&D</h1></Link>
             </div>
             <nav className={styles.nav}>
-                <Link href='/about'>ABOUT</Link>
+                <Link href="/monsters">MONSTERS</Link>
+                <Link href="/about">ABOUT</Link>
             </nav>
         </header>
     )
