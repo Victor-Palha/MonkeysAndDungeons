@@ -80,7 +80,7 @@ export default function Monster(){
 
     return (
         <>  
-            <Header/>
+            <Header main={true}/>
                 <Head><title>{nome} - Monkeys & Dungeons</title></Head>
                 <main className={styles.main}>
                     {data?.map((info)=>{

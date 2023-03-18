@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <Head><title>Home - Monkeys & Dungeons</title></Head>
-      <Header/>
+      <Header main={false}/>
       <main className={styles.container}>
         <Link href="/monsters">
           <div className={styles.box}>

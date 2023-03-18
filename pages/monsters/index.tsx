@@ -52,7 +52,7 @@ export default function Monsters(){
     }
     return (
         <>
-        <Header/>
+        <Header main={true}/>
         <Head><title>Monsters - Monkeys & Dungeons</title></Head>
 
             <form className={styles.search}>
