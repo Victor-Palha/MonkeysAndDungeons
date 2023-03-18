@@ -56,6 +56,10 @@ function verifySource(source: string){
         return "Van Richten's Guide to Ravenloft"
     }
 }
+type Spell = {
+    slots: number,
+    spell: string[]
+}
 export default function Monster(){
     const router = useRouter()
     const {nome, source, ext, img} = router.query
@@ -128,6 +132,12 @@ export default function Monster(){
                                             <p><strong>CHA: </strong> {info.cha} {verifyScore(info.cha)}</p>
                                         </div>
                                         <div className={styles.saves}>
+                                            <p><strong>Saves: </strong>
+                                            {info.save && Object.keys(info.save).map(element => (
+                                                <span key={element}>
+                                                    {element}: {info.save[element]}, 
+                                                </span>
+                                            ))}</p>
                                             <p><strong>Skills: </strong>
                                             {info.skill && Object.keys(info.skill).map(element => (
                                                 <span key={element}>
@@ -167,6 +177,40 @@ export default function Monster(){
                                                 ))}
                                             </div>
                                         )}
+                                    
+                                    {info.spellcasting && (
+                                    <div className={styles.spellcasting}>
+                                        <h2>Spellcasting</h2>
+                                        <p>{info.spellcasting[0].headerEntries}</p>
+                                        {info.spellcasting[0].spells && Object.values(info.spellcasting[0].spells).map((level:Spell, index) => (
+                                        <div key={index}>
+                                            <h3>Level {index} | Slots {level.slots}:</h3>
+                                            {info.spellcasting[0].spells[index].spells.map(spell => (
+                                            <div key={spell}>
+                                                {spell}
+                                            </div>
+                                            ))}
+                                        </div>
+                                        ))}
+
+                                        {info.spellcasting[0].will && info.spellcasting[0].will.map((spell)=>(
+                                            <div key={spell}>
+                                                <h3>At will: {spell}</h3>
+                                            </div>
+                                        ))}
+
+                                        {info.spellcasting[0].daily && Object.keys(info.spellcasting[0].daily).map(level => (
+                                            <div>
+                                                <h3>Daily: {level}ach</h3>
+                                                {Object.values(info.spellcasting[0].daily[level]).map((spell:string )=> (
+                                                    <div key={spell}>
+                                                        <p>{spell}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ))}
+                                    </div>
+                                    )}
                                     </div>
                                 </div>
                             
