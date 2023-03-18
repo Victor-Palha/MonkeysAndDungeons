@@ -136,7 +136,7 @@ export default function Monster(){
                                             ))}
                                             </p>
                                             <p><strong>Senses: </strong>{info.senses && info.senses.map(sense=>sense)}, passive perception: {info.passive}</p>
-                                            <p><strong>Languages: </strong>{info.languages && info.languages.map(language=> (<span>{language},</span>))}</p>
+                                            <p><strong>Languages: </strong>{info.languages && info.languages.map(language=> (<span key={language}>{language},</span>))}</p>
                                             <p><strong>Challenge: </strong>{info.cr
                                                 ? typeof info.cr === 'string'
                                                     ? info.cr
