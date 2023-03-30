@@ -2,12 +2,14 @@ import Head from "next/head";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaCopyright } from "react-icons/fa";
 import { GiAbstract097, GiAnimalHide, GiCharm, GiChewedSkull, GiDeadlyStrike, GiFireSpellCast, GiMagicShield, GiSpellBook } from "react-icons/gi";
+import Modal from "react-modal";
 import { AiOutlineTrademarkCircle, AiFillFilter} from "react-icons/ai";
 import { FcClearFilters } from "react-icons/fc";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { useFetch } from "../hooks/useFetch";
 import styles from './styles.module.scss'
+import { ModalSpells, Spell } from "../components/ModalSpells";
 
 interface Spells{
     name: string;
@@ -18,6 +20,15 @@ interface Spells{
     classes: string[];
     school: string;
 }
+interface Filters {
+    nome?: string;
+    classe?: string;
+    action?: string;
+    concentration?: boolean;
+    ritual?: boolean;
+    level?: number;
+    school?: string;
+  }
 
 export default function Spells(){
     const classOptions = [
@@ -67,37 +78,40 @@ export default function Spells(){
         {id: "9", label: "9th Level"},
     ]
 
+    const [modalVisible, setModalVisible] = useState(false)
+    const [modalItem, setModalItem] = useState<Spell>()
+    const [filters, setFilters] = useState<Filters>({ nome: "" });
     const [slice, setSlice] = useState(20)
     const [filter, setFilter] = useState(false)
-    const [search, setSearch] = useState('')
-    const [selectedClass, setSelectedClass] = useState<string | null>("");
-    const [selectedCasting, setSelectedCasting] = useState<string | null>("");
-    const [selectedConcentration, setSelectedConcentration] = useState<string | null>("");
-    const [selectedRitual, setSelectedRitual] = useState<string | null>("");
-    const [selectedLevel, setSelectedLevel] = useState<string | null>("");
-    const [selectedSchool, setSelectedSchool] = useState<string | null>("");
-
-    const {data, loading} = useFetch<Spells[]>(`http://localhost:5000/api/spells/query?nome=${search}&classe=${selectedClass}&action=${selectedCasting}&concentration=${selectedConcentration}&ritual=${selectedRitual}&level=${selectedLevel}&school=${selectedSchool}`, slice)
-
+    const [Url, setUrl] = useState(`http://localhost:5000/api/spells/query`)
 
     //filter functions
-    function handleOptionChangeClass(event: ChangeEvent<HTMLInputElement>) {
-      setSelectedClass(event.target.value);
-    }
-    function handleOptionChangeCasting(event: ChangeEvent<HTMLInputElement>) {
-        setSelectedCasting(event.target.value);
+    function handleOptionChangeName(event: ChangeEvent<HTMLInputElement>) {
+        setFilters({ ...filters, nome: event.target.value });
       }
+      
+      function handleOptionChangeClass(event: ChangeEvent<HTMLInputElement>) {
+        setFilters({ ...filters, classe: event.target.value });
+      }
+      
+      function handleOptionChangeCasting(event: ChangeEvent<HTMLInputElement>) {
+        setFilters({ ...filters, action: event.target.value });
+      }
+      
       function handleOptionChangeConcentration(event: ChangeEvent<HTMLInputElement>) {
-        setSelectedConcentration(event.target.value);
+        setFilters({ ...filters, concentration: event.target.value === "true" });
       }
+      
       function handleOptionChangeRitual(event: ChangeEvent<HTMLInputElement>) {
-        setSelectedRitual(event.target.value);
+        setFilters({ ...filters, ritual: event.target.value === "true" });
       }
+      
       function handleOptionChangeLevel(event: ChangeEvent<HTMLInputElement>) {
-        setSelectedLevel(event.target.value);
+        setFilters({ ...filters, level: parseInt(event.target.value) });
       }
+      
       function handleOptionChangeSchool(event: ChangeEvent<HTMLInputElement>) {
-        setSelectedSchool(event.target.value);
+        setFilters({ ...filters, school: event.target.value });
       }
 
     //scroll functions
@@ -106,10 +120,35 @@ export default function Spells(){
             setSlice(prev => prev + 20)
         }
     }
+    useEffect(() => {
+        const url = new URL("http://localhost:5000/api/spells/query");
+        const params = new URLSearchParams(filters);
+      
+        url.search = params.toString();
+      
+        setUrl(url.toString());
+      }, [filters]);
+      
     useEffect(()=>{
         window.addEventListener('scroll', handleScroll)    
     }, [])
-        
+    function handleFilters(){
+        setFilters({nome: ""})
+        setFilter(false)
+    }
+
+    const {data, loading} = useFetch<Spells[]>(Url, slice)
+
+    function handleCloseModal(){
+        setModalVisible(false)
+    }
+
+    async function handleModal(name:string){
+        const response = await fetch(`http://localhost:5000/api/spells/unique?nome=${name}`)
+        const data = await response.json()
+        setModalItem(data[0])
+        setModalVisible(true)
+    }
     if(loading){
         return(
             <>
@@ -119,18 +158,21 @@ export default function Spells(){
             </>
         )
     }
+
+    Modal.setAppElement("#__next")
+
     return(
         <>
         <Header main/>
 
         <Head><title></title></Head>
             <form className={styles.search}>
-                <input type="text" placeholder="Search Spell" onChange={(e)=>setSearch(e.target.value)}/>
+                <input type="text" placeholder="Search Spell" onChange={handleOptionChangeName}/>
                 {filter === false && (
                     <AiFillFilter size={30} onClick={(e)=>setFilter(true)}/>
                 )}
                 {filter === true && (
-                    <FcClearFilters size={30} onClick={(e)=>setFilter(false)}/>
+                    <FcClearFilters size={30} onClick={handleFilters}/>
                 )}
             </form>
             {filter && (
@@ -139,14 +181,8 @@ export default function Spells(){
                         <h3>Classes</h3>
                         {classOptions.map(option => (
                             <div key={option.id}>
-                            <input
-                                type="radio"
-                                id={option.id}
-                                value={option.id}
-                                checked={selectedClass === option.id}
-                                onChange={handleOptionChangeClass}
-                            />
-                            <label htmlFor={option.id}>{option.label}</label>
+                                <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeClass} name="class"/>
+                                <label htmlFor={option.id}>{option.label}</label>
                             </div>
                         ))}
                     </div>
@@ -154,13 +190,7 @@ export default function Spells(){
                         <h3>Casting Time</h3>
                         {castingOptions.map(option => (
                             <div key={option.id}>
-                            <input
-                                type="radio"
-                                id={option.id}
-                                value={option.id}
-                                checked={selectedCasting === option.id}
-                                onChange={handleOptionChangeCasting}
-                            />
+                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeCasting} name="action"/>
                             <label htmlFor={option.id}>{option.label}</label>
                             </div>
                         ))}
@@ -169,13 +199,7 @@ export default function Spells(){
                         <h3>Concentration</h3>
                         {concentrationOptions.map(option => (
                             <div key={option.id}>
-                            <input
-                                type="radio"
-                                id={option.id}
-                                value={option.id}
-                                checked={selectedConcentration === option.id}
-                                onChange={handleOptionChangeConcentration}
-                            />
+                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeConcentration} name="concentration"/>
                             <label htmlFor={option.id}>{option.label}</label>
                             </div>
                         ))}
@@ -184,13 +208,7 @@ export default function Spells(){
                         <h3>Ritual</h3>
                         {ritualOptions.map(option => (
                             <div key={option.id}>
-                            <input
-                                type="radio"
-                                id={option.id}
-                                value={option.id}
-                                checked={selectedRitual === option.id}
-                                onChange={handleOptionChangeRitual}
-                            />
+                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeRitual} name="ritual"/>
                             <label htmlFor={option.id}>{option.label}</label>
                             </div>
                         ))}
@@ -199,13 +217,7 @@ export default function Spells(){
                         <h3>Level</h3>
                         {levelOptions.map(option => (
                             <div key={option.id}>
-                            <input
-                                type="radio"
-                                id={option.id}
-                                value={option.id}
-                                checked={selectedLevel === option.id}
-                                onChange={handleOptionChangeLevel}
-                            />
+                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeLevel} name="level"/>
                             <label htmlFor={option.id}>{option.label}</label>
                             </div>
                         ))}
@@ -214,13 +226,7 @@ export default function Spells(){
                         <h3>School</h3>
                         {schoolOptions.map(option => (
                             <div key={option.id}>
-                            <input
-                                type="radio"
-                                id={option.id}
-                                value={option.id}
-                                checked={selectedSchool === option.id}
-                                onChange={handleOptionChangeSchool}
-                            />
+                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeSchool} name="school"/>
                             <label htmlFor={option.id}>{option.label}</label>
                             </div>
                         ))}
@@ -230,7 +236,7 @@ export default function Spells(){
             <div className={styles.container}>
                 {data.map(spell => (
                     <div key={spell.name} className={styles.a}>
-                        <div className={styles.box}>
+                        <div className={styles.box} onClick={()=>handleModal(spell.name)}>
                             {spell.school === 'Evocation' && (
                                 <GiFireSpellCast size={100}/>
                             )}
@@ -261,7 +267,7 @@ export default function Spells(){
                                 <p>Cantrip</p>
                             )}
                             {spell.level !== 0 && (
-                                <p>{spell.level} Cicle</p>
+                                <p>{spell.level} Level</p>
                             )}
                             <p>{spell.school} Spell</p>
                             <div className={styles.booleans}>
@@ -277,7 +283,7 @@ export default function Spells(){
                             <div className={styles.info}>
                                 <div className={styles.class}>
                                     {spell.classes.map(classes => (
-                                        <span>{classes}, </span>
+                                        <span key={classes}>{classes}, </span>
                                     ))}
                                 </div>
                                 <p>{spell.source}</p>
@@ -286,6 +292,9 @@ export default function Spells(){
                     </div>
                 ))}
             </div>
+            {modalVisible && (
+                    <ModalSpells isOpen={modalVisible} onRequestClose={handleCloseModal} spells={modalItem}/>
+                )}
         <Footer/>
         </>
     )
