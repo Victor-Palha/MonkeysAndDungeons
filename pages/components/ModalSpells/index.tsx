@@ -79,6 +79,7 @@ export function ModalSpells({isOpen, onRequestClose, spells}: ModalSpellsProps){
                 </table>
             )}
             {spells.higher_level && <p><strong>At Higher Levels. </strong>{spells.higher_level}</p>}
+            <p><strong>Classes: </strong>{spells.classes.join(', ')}</p>
 
         </Modal>
     )

@@ -281,11 +281,7 @@ export default function Spells(){
                             <p>{spell.ritual}</p>
                             <p>{spell.concentration}</p>
                             <div className={styles.info}>
-                                <div className={styles.class}>
-                                    {spell.classes.map(classes => (
-                                        <span key={classes}>{classes}, </span>
-                                    ))}
-                                </div>
+                                <p>{spell.classes.join(', ')}</p>
                                 <p>{spell.source}</p>
                             </div>
                         </div>
