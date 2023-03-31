@@ -63,6 +63,14 @@ export default function Spells(){
         {id: "8", label: "8th Level"},
         {id: "9", label: "9th Level"},
     ]
+    const sourceOptions = [
+        {id: "PHB", label: "Player's Handbook"},
+        {id: "AAG", label: "Astral Adventures Guide"},
+        {id: "AI", label: "Acquisitions Inc."},
+        {id: "FTD", label: "Fizban's Treasury of Dragons"},
+        {id: "SCC", label: "Strixhaven: A Curriculum of Chaos"},
+        {id: "TCE", label: "Tasha's Cauldron of Everything"},
+    ]
 
 
     const [filters, setFilters] = useState<Filters>({ nome: "" });
@@ -97,6 +105,9 @@ export default function Spells(){
       
       function handleOptionChangeSchool(event: ChangeEvent<HTMLInputElement>) {
         setFilters({ ...filters, school: event.target.value });
+      }
+      function handleOptionChangeSource(event: ChangeEvent<HTMLInputElement>) {
+        setFilters({ ...filters, source: event.target.value });
       }
 
     //scroll functions
@@ -204,6 +215,15 @@ export default function Spells(){
                         {schoolOptions.map(option => (
                             <div key={option.id}>
                             <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeSchool} name="school"/>
+                            <label htmlFor={option.id}>{option.label}</label>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={styles.filters}>
+                        <h3>Source</h3>
+                        {sourceOptions.map(option => (
+                            <div key={option.id}>
+                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeSource} name="source"/>
                             <label htmlFor={option.id}>{option.label}</label>
                             </div>
                         ))}

@@ -41,4 +41,5 @@ export interface Filters {
     ritual?: boolean;
     level?: number;
     school?: string;
+    source?: string;
   }
