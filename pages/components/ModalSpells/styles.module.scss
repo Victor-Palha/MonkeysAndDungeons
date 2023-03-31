@@ -29,3 +29,22 @@
         }
     }
 }
+.modalSpell{
+    background-color: #fde599;
+    position: absolute;
+    margin: 2rem;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+@media screen and (max-width: 430px) {
+    .modalSpell{
+        margin: {
+            top: 2rem;
+            left: 5px;
+            right: 5px;
+        };
+    }
+}

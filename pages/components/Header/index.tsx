@@ -1,8 +1,10 @@
 import styles from './styles.module.scss';
 import Link from 'next/link';
+
 interface IHeader{
     main?: boolean;
 }
+
 export function Header(props:IHeader){
     return(
         <header className={styles.header}>

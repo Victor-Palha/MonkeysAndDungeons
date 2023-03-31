@@ -56,16 +56,19 @@ function verifySource(source: string){
         return "Van Richten's Guide to Ravenloft"
     }
 }
+
 type Spell = {
     slots: number,
     spell: string[]
 }
+
 export default function Monster(){
+    //Data Query
     const router = useRouter()
     const {nome, source, ext, img} = router.query
-    //API GET
+    //Fetch Data
     const {data, loading} = useFetch<any>(`http://localhost:5000/api/monsters/unique?nome=${nome}&source=${source}`, 1)
-    console.log(data)
+
     if(loading){
         return(
             <>
@@ -224,9 +227,7 @@ export default function Monster(){
                                     )}
                                     </div>
                                 </div>
-                            
                         )
-                        
                     })}
                 </main>
             <Footer/>

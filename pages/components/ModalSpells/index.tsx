@@ -1,50 +1,21 @@
 import Modal from 'react-modal';
 import styles from './styles.module.scss'
+//Icons
 import {FiX} from 'react-icons/fi';
+//Interface
+import { ISpellItem } from '@/interfaces/Ispells';
 
-export interface Spell{
-    name: string;
-    source: string;
-    level: number;
-    school: string;
-    ritual: boolean;
-    casting_time: string;
-    range: string;
-    components: string;
-    duration: Duration;
-    description: string;
-    higher_level?: string;
-    tables?: Tables;
-    classes: string[];
-}
-interface Duration{
-    time: string;
-    concentration: boolean;
-}
-interface Tables{
-    header: string[];
-    rows: string[][];
-}
+
 interface ModalSpellsProps {
     isOpen: boolean;
     onRequestClose: () => void;
-    spells: Spell;
+    spells: ISpellItem;
 }
 
 export function ModalSpells({isOpen, onRequestClose, spells}: ModalSpellsProps){
-    const customStyles ={
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            padding: '2rem',
-            transform: "translate(-50%, -50%)",
-            backgroundColor: '#fde599',
-        }
-    }
+
     return(
-        <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles}>
+        <Modal isOpen={isOpen} onRequestClose={onRequestClose} className={styles.modalSpell}>
             <button type="button" onClick={onRequestClose} className="react-modal-close" style={{background: 'transparent', border:0}}>
                 <FiX size={45} color="#f34748"/>
             </button>
@@ -80,7 +51,6 @@ export function ModalSpells({isOpen, onRequestClose, spells}: ModalSpellsProps){
             )}
             {spells.higher_level && <p><strong>At Higher Levels. </strong>{spells.higher_level}</p>}
             <p><strong>Classes: </strong>{spells.classes.join(', ')}</p>
-
         </Modal>
     )
 }

@@ -1,29 +1,18 @@
 import Head from "next/head";
-import Link from "next/link";
+import styles from './styles.module.scss'
+//Components
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+//Hooks
 import { useFetch } from "../hooks/useFetch";
-import styles from './styles.module.scss'
-import { useState, useRef, useEffect } from "react";
-import {GiFishMonster} from 'react-icons/gi'
+import { useState, useEffect } from "react";
 
-interface Monster{
-    name: string;
-    source: string;
-    cr:{
-        cr?: string;
-        lair?: string;
-        coven?: string;
-    } | string;
-    type: Type | string;
-    image: boolean;
-    ext: string | null;
-}
-interface Type{
-    type: string;
-    tags: string[];
-    cr?: string;
-}
+
+//interface
+import { Monster } from "@/interfaces/Imonster";
+import MonsterBox from "../components/MonsterBox";
+
+
 
 export default function Monsters(){
 
@@ -61,28 +50,9 @@ export default function Monsters(){
 
             <div className={styles.container}>
             {data?.map(monster => {
-                  return (
-                    <Link href={{pathname: '/monster', query: { nome: monster.name, source: monster.source, ext:monster.ext, img: monster.image }}} key={monster.name} className={styles.a}>
-                        <div className={styles.box} >
-                            {monster.image && (<img src={`http://localhost:5000/bestiary/${monster.source}/${monster.name}${monster.ext}`} alt={monster.name}/>)}
-                            {!monster.image && (<GiFishMonster size={100}/>)}
-                        <p>{monster.name}</p>
-                        <span>Source: {monster.source}</span>
-                        <span>Type: {monster.type
-                            ? typeof monster.type === 'string'
-                                ? monster.type
-                                : monster.type.type
-                            : ''}
-                        </span>
-                        <span>Challenge: {monster.cr
-                            ? typeof monster.cr === 'string'
-                                ? monster.cr
-                                : monster.cr.cr
-                            : ''}
-                        </span>
-                        </div>
-                    </Link>
-                );
+                    return (
+                        <MonsterBox monster={monster}/>
+                    )
                 })}
                 
             </div>

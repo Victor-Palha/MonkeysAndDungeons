@@ -1,34 +1,20 @@
 import Head from "next/head";
+import styles from './styles.module.scss'
+//Icons
 import { ChangeEvent, useEffect, useState } from "react";
-import { FaCopyright } from "react-icons/fa";
-import { GiAbstract097, GiAnimalHide, GiCharm, GiChewedSkull, GiDeadlyStrike, GiFireSpellCast, GiMagicShield, GiSpellBook } from "react-icons/gi";
-import Modal from "react-modal";
-import { AiOutlineTrademarkCircle, AiFillFilter} from "react-icons/ai";
+import { AiFillFilter} from "react-icons/ai";
 import { FcClearFilters } from "react-icons/fc";
+//Components
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { useFetch } from "../hooks/useFetch";
-import styles from './styles.module.scss'
-import { ModalSpells, Spell } from "../components/ModalSpells";
+//Spell Box
+import SpellsBox from "../components/SpellsBox";
+//Interfaces
+import { Filters, ISpellsToBox } from "@/interfaces/Ispells";
 
-interface Spells{
-    name: string;
-    source: string;
-    level: number;
-    ritual: boolean;
-    concentration: boolean;
-    classes: string[];
-    school: string;
-}
-interface Filters {
-    nome?: string;
-    classe?: string;
-    action?: string;
-    concentration?: boolean;
-    ritual?: boolean;
-    level?: number;
-    school?: string;
-  }
+
+
 
 export default function Spells(){
     const classOptions = [
@@ -78,8 +64,7 @@ export default function Spells(){
         {id: "9", label: "9th Level"},
     ]
 
-    const [modalVisible, setModalVisible] = useState(false)
-    const [modalItem, setModalItem] = useState<Spell>()
+
     const [filters, setFilters] = useState<Filters>({ nome: "" });
     const [slice, setSlice] = useState(20)
     const [filter, setFilter] = useState(false)
@@ -120,35 +105,29 @@ export default function Spells(){
             setSlice(prev => prev + 20)
         }
     }
+    useEffect(()=>{
+        window.addEventListener('scroll', handleScroll)    
+    }, [])
+
+    //Filters
     useEffect(() => {
         const url = new URL("http://localhost:5000/api/spells/query");
-        const params = new URLSearchParams(filters);
+        const params = new URLSearchParams(filters as any);
       
         url.search = params.toString();
       
         setUrl(url.toString());
       }, [filters]);
       
-    useEffect(()=>{
-        window.addEventListener('scroll', handleScroll)    
-    }, [])
     function handleFilters(){
         setFilters({nome: ""})
         setFilter(false)
     }
 
-    const {data, loading} = useFetch<Spells[]>(Url, slice)
+    //Fetch Datas
+    const {data, loading} = useFetch<ISpellsToBox[]>(Url, slice)
 
-    function handleCloseModal(){
-        setModalVisible(false)
-    }
 
-    async function handleModal(name:string){
-        const response = await fetch(`http://localhost:5000/api/spells/unique?nome=${name}`)
-        const data = await response.json()
-        setModalItem(data[0])
-        setModalVisible(true)
-    }
     if(loading){
         return(
             <>
@@ -158,8 +137,6 @@ export default function Spells(){
             </>
         )
     }
-
-    Modal.setAppElement("#__next")
 
     return(
         <>
@@ -235,62 +212,10 @@ export default function Spells(){
             )}
             <div className={styles.container}>
                 {data.map(spell => (
-                    <div key={spell.name} className={styles.a}>
-                        <div className={styles.box} onClick={()=>handleModal(spell.name)}>
-                            {spell.school === 'Evocation' && (
-                                <GiFireSpellCast size={100}/>
-                            )}
-                            {spell.school === 'Divination' && (
-                                <GiSpellBook size={100}/>
-                            )}
-                            {spell.school === 'Necromancy' && (
-                                <GiChewedSkull size={100}/>
-                            )}
-                            {spell.school === 'Abjuration' && (
-                                <GiMagicShield size={100}/>
-                            )}
-                            {spell.school === 'Transmutation' && (
-                                <GiAnimalHide size={100}/>
-                            )}
-                            {spell.school === 'Conjuration' && (
-                                <GiDeadlyStrike size={100}/>
-                            )}
-                            {spell.school === 'Enchantment' && (
-                                <GiCharm size={100}/>
-                            )}
-                            {spell.school === 'Illusion' && (
-                                <GiAbstract097 size={100}/>
-                            )}
-                            <h2>{spell.name}</h2>
-                            
-                            {spell.level === 0 && (
-                                <p>Cantrip</p>
-                            )}
-                            {spell.level !== 0 && (
-                                <p>{spell.level} Level</p>
-                            )}
-                            <p>{spell.school} Spell</p>
-                            <div className={styles.booleans}>
-                                {spell.concentration === true && (
-                                    <FaCopyright/>
-                                )}
-                                {spell.ritual === true && (
-                                    <AiOutlineTrademarkCircle />
-                                )}
-                            </div>
-                            <p>{spell.ritual}</p>
-                            <p>{spell.concentration}</p>
-                            <div className={styles.info}>
-                                <p>{spell.classes.join(', ')}</p>
-                                <p>{spell.source}</p>
-                            </div>
-                        </div>
-                    </div>
+                    <SpellsBox spell={spell}/>
                 ))}
             </div>
-            {modalVisible && (
-                    <ModalSpells isOpen={modalVisible} onRequestClose={handleCloseModal} spells={modalItem}/>
-                )}
+            
         <Footer/>
         </>
     )
