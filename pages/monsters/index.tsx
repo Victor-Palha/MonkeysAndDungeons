@@ -1,16 +1,16 @@
 import Head from "next/head";
 import styles from './styles.module.scss'
 //Components
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
+import { Footer } from "../../components/Footer";
+import { Header } from "../../components/Header";
 //Hooks
-import { useFetch } from "../hooks/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import { useState, useEffect } from "react";
 
 
 //interface
 import { Monster } from "@/interfaces/Imonster";
-import MonsterBox from "../components/MonsterBox";
+import MonsterBox from "../../components/MonsterBox";
 
 
 

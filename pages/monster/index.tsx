@@ -1,9 +1,9 @@
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { GiFishMonster } from "react-icons/gi"
-import { Footer } from "../components/Footer"
-import { Header } from "../components/Header"
-import { useFetch } from "../hooks/useFetch"
+import { Footer } from "../../components/Footer"
+import { Header } from "../../components/Header"
+import { useFetch } from "../../hooks/useFetch"
 import styles from './styles.module.scss'
 
 function verifyScore(att:number){

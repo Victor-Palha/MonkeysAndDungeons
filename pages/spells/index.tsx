@@ -5,11 +5,11 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { AiFillFilter} from "react-icons/ai";
 import { FcClearFilters } from "react-icons/fc";
 //Components
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
-import { useFetch } from "../hooks/useFetch";
+import { Footer } from "../../components/Footer";
+import { Header } from "../../components/Header";
+import { useFetch } from "../../hooks/useFetch";
 //Spell Box
-import SpellsBox from "../components/SpellsBox";
+import SpellsBox from "../../components/SpellsBox";
 //Interfaces
 import { Filters, ISpellsToBox } from "@/interfaces/Ispells";
 

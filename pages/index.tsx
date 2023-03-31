@@ -1,8 +1,8 @@
 import styles from '../styles/Home.module.scss'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Header } from './components/Header'
-import { Footer } from './components/Footer'
+import { Header } from '../components/Header'
+import { Footer } from '../components/Footer'
 //icons
 import { FaDragon } from 'react-icons/fa'
 import { FaMagic } from 'react-icons/fa'
