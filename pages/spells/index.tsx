@@ -142,7 +142,7 @@ export default function Spells(){
         <>
         <Header main/>
 
-        <Head><title></title></Head>
+        <Head><title>Spells - Monkeys & Dungeons</title></Head>
             <form className={styles.search}>
                 <input type="text" placeholder="Search Spell" onChange={handleOptionChangeName}/>
                 {filter === false && (

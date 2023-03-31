@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from '../../monsters/styles.module.scss'
+import styles from '../../pages/monsters/styles.module.scss'
 
 //Icons
 import {GiFishMonster} from 'react-icons/gi'

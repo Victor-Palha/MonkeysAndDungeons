@@ -7,7 +7,6 @@ import { Header } from "../../components/Header";
 import { useFetch } from "../../hooks/useFetch";
 import { useState, useEffect } from "react";
 
-
 //interface
 import { Monster } from "@/interfaces/Imonster";
 import MonsterBox from "../../components/MonsterBox";
