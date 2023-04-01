@@ -232,7 +232,7 @@ export default function Spells(){
             )}
             <div className={styles.container}>
                 {data.map(spell => (
-                    <SpellsBox spell={spell}/>
+                    <SpellsBox spell={spell} key={spell.name}/>
                 ))}
             </div>
             
