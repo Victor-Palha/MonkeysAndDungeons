@@ -50,7 +50,7 @@ export default function Monsters(){
             <div className={styles.container}>
             {data?.map(monster => {
                     return (
-                        <MonsterBox monster={monster}/>
+                        <MonsterBox monster={monster} key={monster.name}/>
                     )
                 })}
                 

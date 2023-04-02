@@ -18,3 +18,43 @@
         color: #ff0000;
     }
 }
+//mobile
+.navMobile{
+    display: none;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.navMobile:hover{
+    transform: scale(1.1);
+}
+.mobile{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    a{
+        font-size: 18px;
+        margin: 10px 5px;
+        transition: 0.5s;
+    }
+    color: #fff;
+    background-color: black;
+    padding: 5px 0;
+    a:hover{
+        color: #ff0000;
+    }
+}
+@media screen and (max-width: 550px) {
+    .nav{
+        display: none;
+    }
+    .navMobile{
+        display: block
+    }
+}
+@media screen and (min-width: 550px) {
+    .mobile{
+        display: none;
+    }    
+}

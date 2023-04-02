@@ -12,6 +12,7 @@ import { useFetch } from "../../hooks/useFetch";
 import SpellsBox from "../../components/SpellsBox";
 //Interfaces
 import { Filters, ISpellsToBox } from "@/interfaces/Ispells";
+import SpellsTable from "@/components/SpellsTable";
 
 
 
@@ -74,7 +75,8 @@ export default function Spells(){
 
 
     const [filters, setFilters] = useState<Filters>({ nome: "" });
-    const [slice, setSlice] = useState(20)
+    const [view, setView] = useState(false)
+    const [slice, setSlice] = useState(40)
     const [filter, setFilter] = useState(false)
     const [Url, setUrl] = useState(`http://localhost:5000/api/spells/query`)
 
@@ -134,6 +136,13 @@ export default function Spells(){
         setFilters({nome: ""})
         setFilter(false)
     }
+    function handleChangeView(){
+        if(view){
+            setView(false)
+        }else if(!view){
+            setView(true)
+        }
+    }
 
     //Fetch Datas
     const {data, loading} = useFetch<ISpellsToBox[]>(Url, slice)
@@ -163,6 +172,9 @@ export default function Spells(){
                     <FcClearFilters size={30} onClick={handleFilters}/>
                 )}
             </form>
+            <div className={styles.button}>
+                <button onClick={handleChangeView}>Resume View</button>
+            </div>
             {filter && (
                 <div className={styles.modal}>
                     <div className={styles.filters}>
@@ -230,11 +242,33 @@ export default function Spells(){
                     </div>
                 </div>
             )}
-            <div className={styles.container}>
-                {data.map(spell => (
-                    <SpellsBox spell={spell} key={spell.name}/>
-                ))}
-            </div>
+            {!view && (
+                <div className={styles.container}>
+                    {data.map(spell => (
+                        <SpellsBox spell={spell} key={spell.name}/>
+                    ))}
+                </div>
+            )}
+            {view && (
+                <table className={styles.table}>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>School</th>
+                            <th>Con.</th>
+                            <th>Level</th>
+                            <th>Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((spell, index)=>(
+                            <SpellsTable spell={spell} key={index}/>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+
+            
             
         <Footer/>
         </>
