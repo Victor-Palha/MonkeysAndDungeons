@@ -1,3 +1,13 @@
+.save{
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    svg{
+        cursor: pointer;
+        margin-left: 1rem;
+        font-size: 30px;
+    }
+}
 .info{
     margin: 1rem 0;
     line-height: 25px;

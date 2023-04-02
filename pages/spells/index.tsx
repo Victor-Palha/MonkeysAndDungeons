@@ -78,6 +78,7 @@ export default function Spells(){
     const [view, setView] = useState(false)
     const [slice, setSlice] = useState(40)
     const [filter, setFilter] = useState(false)
+    
     const [Url, setUrl] = useState(`http://localhost:5000/api/spells/query`)
 
     //filter functions
@@ -267,9 +268,6 @@ export default function Spells(){
                     </tbody>
                 </table>
             )}
-
-            
-            
         <Footer/>
         </>
     )

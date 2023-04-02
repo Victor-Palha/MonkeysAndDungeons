@@ -1,0 +1,46 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.a{
+    height: 500px;
+    position: relative;
+    cursor: pointer;
+    width: 300px;
+    margin: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: rgba(22, 22, 22, 0.822);
+    color: #fff;
+}
+.box{
+    svg{
+        margin-top: 10px;
+        width: 100%;
+        color: white;
+        transition: 0.5s;
+    }
+    h2{
+        text-align: center;
+        margin: 1rem;
+    }
+    p{
+        text-align: center;
+        font-size: 20px;
+        margin: 1rem;
+    }
+}
+.info{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    background-color: rgb(73, 73, 73);
+    padding: 1rem;
+    border-radius: 0px 0px 5px;
+    .class{
+        text-align: center;
+        margin: 0px auto;
+    }
+}

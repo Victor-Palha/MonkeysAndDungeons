@@ -28,10 +28,9 @@ export default function SpellsTable( { spell }: { spell: ISpellsToBox }){
             <td>{spell.concentration && ("C")} {!spell.concentration && ("")}</td>
             <td>{spell.level}</td>
             <td>{spell.source}</td>
-            
         </tr>
         {modalVisible && (
-                <ModalSpells isOpen={modalVisible} onRequestClose={handleCloseModal} spells={modalItem}/>
+            <ModalSpells isOpen={modalVisible} onRequestClose={handleCloseModal} spells={modalItem} baseSpell={spell}/>
         )}
         </>
         

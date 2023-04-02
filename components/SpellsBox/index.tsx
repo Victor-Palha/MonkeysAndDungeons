@@ -9,9 +9,6 @@ import { FaCopyright } from "react-icons/fa";
 import { GiAbstract097, GiAnimalHide, GiCharm, GiChewedSkull, GiDeadlyStrike, GiFireSpellCast, GiMagicShield, GiSpellBook } from "react-icons/gi";
 import { AiOutlineTrademarkCircle} from "react-icons/ai";
 
-
-
-
 export default function SpellsBox( { spell }: { spell: ISpellsToBox }){
 
     //Modal States and Functions
@@ -74,8 +71,6 @@ export default function SpellsBox( { spell }: { spell: ISpellsToBox }){
                             <AiOutlineTrademarkCircle />
                         )}
                     </div>
-                    <p>{spell.ritual}</p>
-                    <p>{spell.concentration}</p>
                     <div className={styles.info}>
                         <p>{spell.classes.join(', ')}</p>
                         <p>{spell.source}</p>
@@ -83,7 +78,7 @@ export default function SpellsBox( { spell }: { spell: ISpellsToBox }){
                 </div>
             </div>
             {modalVisible && (
-                <ModalSpells isOpen={modalVisible} onRequestClose={handleCloseModal} spells={modalItem}/>
+                <ModalSpells isOpen={modalVisible} onRequestClose={handleCloseModal} spells={modalItem} baseSpell={spell}/>
             )}
         </>
     )

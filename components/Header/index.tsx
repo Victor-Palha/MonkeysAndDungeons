@@ -31,6 +31,7 @@ export function Header(props:IHeader){
                     </>
                 )}
                 <Link href="/about">ABOUT</Link>
+                <Link href="/profile">PROFILE</Link>
             </nav>
             <nav className={styles.navMobile}>
                 {!mobile && (
@@ -50,6 +51,7 @@ export function Header(props:IHeader){
                     </>
                 )}
                 <Link href="/about">ABOUT</Link>
+                <Link href="/profile">PROFILE</Link>
         </div>
         )}
         </>
