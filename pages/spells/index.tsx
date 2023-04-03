@@ -19,6 +19,7 @@ import SpellsTable from "@/components/SpellsTable";
 
 export default function Spells(){
     const classOptions = [
+        {id: "", label: "All Classes"},
         {id: "Artificer", label: "Artificer"},
         {id: "Bard", label: "Bard"},
         {id: "Cleric", label: "Cleric"},
@@ -30,19 +31,23 @@ export default function Spells(){
         {id: "Wizard", label: "Wizard"},
     ]
     const castingOptions = [
+        {id: "", label: "All Casting Times"},
         {id: "1 action", label: "Action"},
         {id: "1 bonus action", label: "Bonus Action"},
         {id: "1 reaction", label: "Reaction"},
     ]
     const concentrationOptions = [
+        {id: "", label: "Concentration or No Concentration"},
         {id: "true", label: "Concentration"},
         {id: "false", label: "No Concentration"},
     ]
     const ritualOptions = [
+        {id: "", label: "Ritual or No Ritual"},
         {id: "true", label: "Ritual"},
         {id: "false", label: "No Ritual"},
     ]
     const schoolOptions = [
+        {id: "", label: "All Schools"},
         {id: "Abjuration", label: "Abjuration"},
         {id: "Conjuration", label: "Conjuration"},
         {id: "Divination", label: "Divination"},
@@ -53,6 +58,7 @@ export default function Spells(){
         {id: "Transmutation", label: "Transmutation"},
     ]
     const levelOptions = [
+        {id: "", label: "All Levels"},
         {id: "0", label: "Cantrip"},
         {id: "1", label: "1st Level"},
         {id: "2", label: "2nd Level"},
@@ -65,6 +71,7 @@ export default function Spells(){
         {id: "9", label: "9th Level"},
     ]
     const sourceOptions = [
+        {id: '', label: "All Sources"},
         {id: "PHB", label: "Player's Handbook"},
         {id: "AAG", label: "Astral Adventures Guide"},
         {id: "AI", label: "Acquisitions Inc."},
@@ -86,30 +93,30 @@ export default function Spells(){
         setFilters({ ...filters, nome: event.target.value });
       }
       
-      function handleOptionChangeClass(event: ChangeEvent<HTMLInputElement>) {
+      function handleOptionChangeClass(event: ChangeEvent<HTMLSelectElement>) {
         setFilters({ ...filters, classe: event.target.value });
       }
       
-      function handleOptionChangeCasting(event: ChangeEvent<HTMLInputElement>) {
+      function handleOptionChangeCasting(event: ChangeEvent<HTMLSelectElement>) {
         setFilters({ ...filters, action: event.target.value });
       }
       
-      function handleOptionChangeConcentration(event: ChangeEvent<HTMLInputElement>) {
+      function handleOptionChangeConcentration(event: ChangeEvent<HTMLSelectElement>) {
         setFilters({ ...filters, concentration: event.target.value === "true" });
       }
       
-      function handleOptionChangeRitual(event: ChangeEvent<HTMLInputElement>) {
+      function handleOptionChangeRitual(event: ChangeEvent<HTMLSelectElement>) {
         setFilters({ ...filters, ritual: event.target.value === "true" });
       }
       
-      function handleOptionChangeLevel(event: ChangeEvent<HTMLInputElement>) {
+      function handleOptionChangeLevel(event: ChangeEvent<HTMLSelectElement>) {
         setFilters({ ...filters, level: parseInt(event.target.value) });
       }
       
-      function handleOptionChangeSchool(event: ChangeEvent<HTMLInputElement>) {
+      function handleOptionChangeSchool(event: ChangeEvent<HTMLSelectElement>) {
         setFilters({ ...filters, school: event.target.value });
       }
-      function handleOptionChangeSource(event: ChangeEvent<HTMLInputElement>) {
+      function handleOptionChangeSource(event: ChangeEvent<HTMLSelectElement>) {
         setFilters({ ...filters, source: event.target.value });
       }
 
@@ -180,66 +187,78 @@ export default function Spells(){
                 <div className={styles.modal}>
                     <div className={styles.filters}>
                         <h3>Classes</h3>
-                        {classOptions.map(option => (
-                            <div key={option.id}>
-                                <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeClass} name="class"/>
-                                <label htmlFor={option.id}>{option.label}</label>
-                            </div>
+                        <select onChange={handleOptionChangeClass}>
+                        {classOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                            {option.label}
+                            </option>
                         ))}
+                        </select>
                     </div>
                     <div className={styles.filters}>
                         <h3>Casting Time</h3>
-                        {castingOptions.map(option => (
-                            <div key={option.id}>
-                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeCasting} name="action"/>
-                            <label htmlFor={option.id}>{option.label}</label>
-                            </div>
+                        <select onChange={handleOptionChangeCasting}>
+                        {castingOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                            {option.label}
+                            </option>
                         ))}
+                        </select>
                     </div>
                     <div className={styles.filters}>
                         <h3>Concentration</h3>
-                        {concentrationOptions.map(option => (
-                            <div key={option.id}>
-                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeConcentration} name="concentration"/>
-                            <label htmlFor={option.id}>{option.label}</label>
-                            </div>
+                        
+                        <select onChange={handleOptionChangeConcentration}>
+                        {concentrationOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                            {option.label}
+                            </option>
                         ))}
+                        </select>
                     </div>
                     <div className={styles.filters}>
                         <h3>Ritual</h3>
-                        {ritualOptions.map(option => (
-                            <div key={option.id}>
-                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeRitual} name="ritual"/>
-                            <label htmlFor={option.id}>{option.label}</label>
-                            </div>
+                        
+                        <select onChange={handleOptionChangeRitual}>
+                        {ritualOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                            {option.label}
+                            </option>
                         ))}
+                        </select>
                     </div>
                     <div className={styles.filters}>
                         <h3>Level</h3>
-                        {levelOptions.map(option => (
-                            <div key={option.id}>
-                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeLevel} name="level"/>
-                            <label htmlFor={option.id}>{option.label}</label>
-                            </div>
+                        
+                        <select onChange={handleOptionChangeLevel}>
+                        {levelOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                            {option.label}
+                            </option>
                         ))}
+                        </select>
                     </div>
                     <div className={styles.filters}>
                         <h3>School</h3>
-                        {schoolOptions.map(option => (
-                            <div key={option.id}>
-                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeSchool} name="school"/>
-                            <label htmlFor={option.id}>{option.label}</label>
-                            </div>
+                        
+                        <select onChange={handleOptionChangeSchool}>
+                        {schoolOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                            {option.label}
+                            </option>
                         ))}
+                        </select>
                     </div>
                     <div className={styles.filters}>
                         <h3>Source</h3>
-                        {sourceOptions.map(option => (
-                            <div key={option.id}>
-                            <input type="radio" id={option.id} value={option.id} onChange={handleOptionChangeSource} name="source"/>
-                            <label htmlFor={option.id}>{option.label}</label>
-                            </div>
+                        
+                        <select onChange={handleOptionChangeSource}>
+                        {sourceOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                            {option.label}
+                            </option>
                         ))}
+                        </select>
                     </div>
                 </div>
             )}

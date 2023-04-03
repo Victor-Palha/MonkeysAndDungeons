@@ -6,6 +6,7 @@ import styles from './styles.module.scss'
 //Interfaces
 import { ISpellsToBox } from "@/interfaces/Ispells";
 import SpellsBox from "@/components/SpellsBox";
+import SpellsTable from "@/components/SpellsTable";
 
 export default function Profile(){
 
@@ -13,7 +14,6 @@ export default function Profile(){
 
     useEffect(()=>{
         const myGrimoire = localStorage.getItem("@grimoire")
-        alert(myGrimoire)
         setGrimoire(JSON.parse(myGrimoire) || [])
     },[])
     
@@ -21,17 +21,29 @@ export default function Profile(){
         <>
             <Header main/>
             <main>
-                <h1>Profile</h1>
                 <div className={styles.saves}>
-                    <h2>Grimoire</h2>
+                    <h2>My Grimoire</h2>
                     <div className={styles.container}>
-                        {grimoire.length > 0 && grimoire.map((spell: ISpellsToBox) => (
-                            <SpellsBox spell={spell} key={spell.name} />
-                        ))}
+                        <table className={styles.table}>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>School</th>
+                                    <th>Con.</th>
+                                    <th>Level</th>
+                                    <th>Source</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {grimoire.map((spell, index)=>(
+                                    <SpellsTable spell={spell} key={index}/>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div className={styles.saves}>
-                    <h2>Bestiary</h2>
+                    <h2>My Bestiary</h2>
                 </div>
             </main>
             <Footer/>

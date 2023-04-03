@@ -18,18 +18,19 @@ interface ModalSpellsProps {
 
 export function ModalSpells({isOpen, onRequestClose, spells, baseSpell}: ModalSpellsProps){
     
-    const [saved, setSeved] = useState(false)
+    const [saved, setSaved] = useState(false)
+    const [currentSpell] = useState<ISpellsToBox[]>([baseSpell])
     const [grimoire, setGrimoire] = useState<ISpellsToBox[]>([])
 
     useEffect(()=>{
         const savedSpells = localStorage.getItem("@grimoire")
-        const myGrimoire:ISpellsToBox[] = JSON.parse(savedSpells) || []
-        const thisSpell = myGrimoire.some((spell: ISpellsToBox) => spell.name === spells.name)
-
+        const myGrimoire = JSON.parse(savedSpells) || []
+        let thisSpell = myGrimoire.some((spell) => spell.name === currentSpell[0].name)
+        
         if(thisSpell){
-            setSeved(true)
+            setSaved(true)
         }else{
-            setSeved(false)
+            setSaved(false)
         }
         setGrimoire(myGrimoire)
 
@@ -38,24 +39,23 @@ export function ModalSpells({isOpen, onRequestClose, spells, baseSpell}: ModalSp
     
     
     function handleSaveSpell(){
-        const thisSpell = grimoire.some((spell: ISpellsToBox) => spell.name === spells.name)
-
+        let thisSpell = grimoire.some((spell) => spell.name === currentSpell[0].name)
+    
         if(thisSpell){
             toast.warn("This spell is already in your grimoire")
             return
         }else{
-            alert(baseSpell)
-            setGrimoire([...grimoire, baseSpell])
-            alert(grimoire)
-            localStorage.setItem("@grimoire", JSON.stringify(grimoire))
+            const updatedGrimoire = [...grimoire, currentSpell[0]]
+            setGrimoire(updatedGrimoire)
+            localStorage.setItem("@grimoire", JSON.stringify(updatedGrimoire))
             toast.success("Spell added to your grimoire")
         }
     }
 
     function handleDeleteSpell(){
-        const thisSpell = grimoire.some((spell: ISpellsToBox) => spell.name === spells.name)
+        let thisSpell = grimoire.some((spell: ISpellsToBox) => spell.name === currentSpell[0].name)
         if(thisSpell){
-            const newGrimoire = grimoire.filter((spell: ISpellsToBox) => spell.name !== spells.name)
+            const newGrimoire = grimoire.filter((spell: ISpellsToBox) => spell.name !== currentSpell[0].name)
             localStorage.setItem("@grimoire", JSON.stringify(newGrimoire))
             toast.success("Spell deleted from your grimoire")
         }else{

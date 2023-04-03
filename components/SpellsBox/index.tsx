@@ -1,5 +1,5 @@
 import { useState } from "react"
-import styles from "../../pages/spells/styles.module.scss"
+import styles from "./styles.module.scss"
 import { ModalSpells } from "../ModalSpells"
 import Modal from "react-modal";
 //interfaces
