@@ -7,6 +7,7 @@ import styles from './styles.module.scss'
 import { ISpellsToBox } from "@/interfaces/Ispells";
 import SpellsBox from "@/components/SpellsBox";
 import SpellsTable from "@/components/SpellsTable";
+import Head from "next/head";
 
 export default function Profile(){
 
@@ -19,6 +20,7 @@ export default function Profile(){
     
     return(
         <>
+            <Head><title>Profile - Monkeys & Dungeons</title></Head>
             <Header main/>
             <main>
                 <div className={styles.saves}>

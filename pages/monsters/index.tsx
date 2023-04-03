@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 //interface
 import { Monster } from "@/interfaces/Imonster";
 import MonsterBox from "../../components/MonsterBox";
+import Loading from "@/components/Loading";
 
 
 
@@ -33,7 +34,7 @@ export default function Monsters(){
         return (
             <>
                 <Header/>
-                    <h1 className={styles.loading}>Loading...</h1>
+                    <Loading/>
                 <Footer/>
             </>
         )

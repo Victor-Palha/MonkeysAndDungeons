@@ -13,6 +13,7 @@ import SpellsBox from "../../components/SpellsBox";
 //Interfaces
 import { Filters, ISpellsToBox } from "@/interfaces/Ispells";
 import SpellsTable from "@/components/SpellsTable";
+import Loading from "@/components/Loading";
 
 
 
@@ -160,7 +161,7 @@ export default function Spells(){
         return(
             <>
             <Header/>
-                <h1>Loading...</h1>
+                <Loading/>
             <Footer/>
             </>
         )

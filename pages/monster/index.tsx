@@ -5,6 +5,7 @@ import { Footer } from "../../components/Footer"
 import { Header } from "../../components/Header"
 import { useFetch } from "../../hooks/useFetch"
 import styles from './styles.module.scss'
+import Loading from "@/components/Loading"
 
 function verifyScore(att:number){
     if(att == 30){
@@ -73,9 +74,7 @@ export default function Monster(){
         return(
             <>
             <Header/>
-            <div>
-                <h1>Loading...</h1>
-            </div>
+                <Loading/>
             <Footer/>
             </>
         )
@@ -84,7 +83,7 @@ export default function Monster(){
     return (
         <>  
             <Header main={true}/>
-                <Head><title>{nome} - Monkeys & Dungeons</title></Head>
+                <Head><title>{nome}Monsters - Monkeys & Dungeons</title></Head>
                 <main className={styles.main}>
                     {data?.map((info)=>{
                         return(
