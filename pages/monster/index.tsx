@@ -66,7 +66,7 @@ type Spell = {
 export default function Monster(){
     //Data Query
     const router = useRouter()
-    const {nome, source, ext, img} = router.query
+    const {nome, source} = router.query
     //Fetch Data
     const {data, loading} = useFetch<any>(`http://localhost:5000/api/monsters/unique?nome=${nome}&source=${source}`, 1)
 
@@ -89,8 +89,8 @@ export default function Monster(){
                         return(
                                 <div className={styles.information} key={info.name}>
                                     <div className={styles.image}>
-                                        {img === "true" && <img src={`http://localhost:5000/bestiary/${info.source}/${info.name}${ext}`} alt={info.name}/>}
-                                        {img === "false" && <GiFishMonster size={100} className={styles.svg}/> }
+                                        {info.image === true ? <img src={`http://localhost:5000/bestiary/${info.source}/${info.name}${info.ext}`} alt={info.name}/> : <GiFishMonster size={100} className={styles.svg}/> }
+                                        {info.image === false && <GiFishMonster size={100} className={styles.svg}/> }
                                     </div>
                                     <div className={styles.mainInfo}>
                                         <div className={styles.baseInfo}>
