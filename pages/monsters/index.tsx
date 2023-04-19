@@ -85,7 +85,6 @@ export default function Monsters(){
     ]
 
     const [slice, setSlice] = useState(20)
-    const [search, setSearch] = useState('')
     //filters
     const [filters, setFilters] = useState<Filters>({ nome: "" });
     const [filter, setFilter] = useState(false)
