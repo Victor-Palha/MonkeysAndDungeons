@@ -11,9 +11,10 @@ import { useFetch } from "../../hooks/useFetch";
 //Spell Box
 import SpellsBox from "../../components/SpellsBox";
 //Interfaces
-import { Filters, ISpellsToBox } from "@/interfaces/Ispells";
+import { ISpellsToBox } from "@/interfaces/Ispells";
 import SpellsTable from "@/components/SpellsTable";
 import Loading from "@/components/Loading";
+import { Filters } from "@/interfaces/Ifilters";
 
 
 

@@ -1,12 +1,35 @@
 .search{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     margin: 1rem;
     input{
         padding: 0.5rem 1rem;
         margin: 5px;
     }
-    button{
-        padding: 0.5rem 1rem;
+    svg{
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    svg:hover{
+        color: crimson;
+    }
+}
+.modal{
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    color: #fff;
+    background-color: rgba(22, 22, 22, 0.822);
+    .filters{
+        margin: 1rem;
+        select{
+            padding: 10px;
+            border: none;
+        }
     }
 }
 .loading{
@@ -21,9 +44,31 @@
     justify-content: space-between;
 }
 
-
+@media screen and (max-width: 850px) {
+    .modal{
+        flex-direction: column;
+        .filters{
+            select{
+                width: 100%;
+            }
+        }
+    }
+}
 @media screen and (max-width: 680px){
     .container{
         justify-content: center;
+    }
+    .modal{
+        .filters{
+            margin: 10px;
+            h3{
+                font-size: 13px;
+            }
+            select{
+                font-size: 10px;
+                width: 100%;
+                padding: 10px;
+            }
+        }
     }
 }
