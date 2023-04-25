@@ -18,8 +18,8 @@ export default function SpellsBox( { spell }: { spell: ISpellsToBox }){
         setModalVisible(false)
     }
 
-    async function handleModal(name:string){
-        const response = await fetch(`http://localhost:5000/api/spells/unique?nome=${name}`)
+    async function handleModal(id:string){
+        const response = await fetch(`http://localhost:5000/api/spells/${id}`)
         const data = await response.json()
         setModalItem(data[0])
         setModalVisible(true)
@@ -28,8 +28,8 @@ export default function SpellsBox( { spell }: { spell: ISpellsToBox }){
     Modal.setAppElement("#__next")
     return (
         <>
-            <div key={spell.name} className={styles.a}>
-                <div className={styles.box} onClick={()=>handleModal(spell.name)}>
+            <div key={spell.id} className={styles.a}>
+                <div className={styles.box} onClick={()=>handleModal(spell.id)}>
                     {spell.school === 'Evocation' && (
                         <GiFireSpellCast size={100}/>
                     )}

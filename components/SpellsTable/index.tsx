@@ -12,8 +12,8 @@ export default function SpellsTable( { spell }: { spell: ISpellsToBox }){
             setModalVisible(false)
         }
     
-        async function handleModal(name:string){
-            const response = await fetch(`http://localhost:5000/api/spells/unique?nome=${name}`)
+        async function handleModal(id:string){
+            const response = await fetch(`http://localhost:5000/api/spells/${id}`)
             const data = await response.json()
             setModalItem(data[0])
             setModalVisible(true)
@@ -22,7 +22,7 @@ export default function SpellsTable( { spell }: { spell: ISpellsToBox }){
         Modal.setAppElement("#__next")
     return (
         <>
-        <tr onClick={()=>handleModal(spell.name)}>
+        <tr onClick={()=>handleModal(spell.id)}>
             <td>{spell.name}</td>
             <td>{spell.school} {spell.ritual && (" (Ritual)")}</td>
             <td>{spell.concentration && ("C")} {!spell.concentration && ("")}</td>

@@ -1,4 +1,5 @@
 export interface Monster{
+    id: string
     name: string;
     source: string;
     cr:{

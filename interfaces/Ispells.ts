@@ -1,5 +1,6 @@
 //Spells Box
 export interface ISpellsToBox{
+    id: string
     name: string;
     source: string;
     level: number;
@@ -10,6 +11,7 @@ export interface ISpellsToBox{
 }
 //Spell Item
 export interface ISpellItem{
+    id: string
     name: string;
     source: string;
     level: number;
